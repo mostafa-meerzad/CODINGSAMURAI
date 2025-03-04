@@ -43,3 +43,10 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 ```
+
+## Route handlers
+
+always use `try/catch` as best practice so if something goes wrong our server doesn't crash
+
+## JWT token 
+
