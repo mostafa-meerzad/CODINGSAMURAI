@@ -11,3 +11,19 @@ for this reason take the out from the routes and place them inside `controllers`
 
 1. Route files `auth.route.js` so it is a **route** file for **auth**
 2. Route handler functions `auth.controller.js` so it ia a **controller** for the **auth**
+
+## DB connection
+
+call the DB connection function in the callback for server's listen
+
+```js
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running or port: ${PORT}`);
+  connectDB();
+});
+```
+
+## DB documents best practice
+
+you should always include a `createdAt` and `updatedAt` field in your documents
