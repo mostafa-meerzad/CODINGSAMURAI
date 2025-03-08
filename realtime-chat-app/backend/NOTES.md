@@ -48,5 +48,31 @@ const userSchema = new mongoose.Schema(
 
 always use `try/catch` as best practice so if something goes wrong our server doesn't crash
 
-## JWT token 
+## JWT token
 
+send token in the cookies
+
+## Route handler Error messages
+
+never return a very specific error message, saying exactly what went wrong, attackers can use it against you
+
+## User Profile Image
+
+use a cloud service like **Cloudinary** with provides services for storing and sharing media files and they offer a free plan 🙂 as well
+
+how to setup cloudinary
+
+```js
+import { v2 as cloudinary } from "cloudinary";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+export default cloudinary;
+```
