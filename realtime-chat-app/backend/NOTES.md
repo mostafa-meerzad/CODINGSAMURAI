@@ -76,3 +76,7 @@ cloudinary.config({
 
 export default cloudinary;
 ```
+
+## Message model
+
+for the message model we need to have **senderId**, **receiverId**, **text** and **image** fields
