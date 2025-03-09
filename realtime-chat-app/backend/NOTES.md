@@ -80,3 +80,18 @@ export default cloudinary;
 ## Message model
 
 for the message model we need to have **senderId**, **receiverId**, **text** and **image** fields
+
+## Messages
+
+to get all the messages between current user and the target user:
+
+we need to query the messages model like this
+
+```js
+const messages = await Message.find({
+  senderId: myId,
+  receiverId: userToChatId,
+  senderId: userToChatId,
+  receiverId: myId,
+});
+```
