@@ -95,3 +95,24 @@ const messages = await Message.find({
   receiverId: myId,
 });
 ```
+
+## Axios Setup
+
+```js
+import axios from "axios";
+
+export const axiosInstance = axios.create({
+  baseURL: "http://localhost:5001/api",
+  withCredentials: true,
+});
+```
+
+The axios.create() method allows you to create a custom Axios instance with pre-configured settings. This is useful when you want to reuse the same configuration across multiple requests.
+
+```js
+// Without axios.create()
+axios.get("http://localhost:5001/api/users");
+
+// With axios.create()
+axiosInstance.get("/users");
+```
