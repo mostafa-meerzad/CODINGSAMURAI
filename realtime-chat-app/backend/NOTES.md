@@ -116,3 +116,29 @@ axios.get("http://localhost:5001/api/users");
 // With axios.create()
 axiosInstance.get("/users");
 ```
+
+## Protect Routes if the User is not logged-in
+
+here is how to protect your pages
+
+```js
+<Routes>
+  <Route
+    path="/"
+    element={authUser ? <HomePage /> : <Navigate to={"/login"} />}
+  />
+  <Route
+    path="/signup"
+    element={!authUser ? <SignupPage /> : <Navigate to={"/"} />}
+  />
+  <Route
+    path="/login"
+    element={!authUser ? <LoginPage /> : <Navigate to={"/"} />}
+  />
+  <Route path="/settings" element={<SettingsPage />} />
+  <Route
+    path="/profile"
+    element={authUser ? <ProfilePage /> : <Navigate to={"/login"} />}
+  />
+</Routes>
+```
