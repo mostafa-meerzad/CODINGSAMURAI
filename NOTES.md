@@ -142,3 +142,80 @@ here is how to protect your pages
   />
 </Routes>
 ```
+
+## Uploading Profile Image
+
+```js
+const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
+const [selectedImage, setSelectedImage] = useState(null);
+
+const handleImageUpload = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+
+  reader.onload = async () => {
+    const base64Image = reader.result;
+    setSelectedImage(base64Image);
+    await updateProfile({ profilePic: base64Image });
+  };
+};
+```
+
+1. Accessing the Uploaded File:
+
+```js
+const file = e.target.files[0];
+if (!file) return;
+```
+
+- e.target.files: This gives you a FileList object containing all selected files.
+- files[0]: Accesses the first uploaded file.
+- Early Return: If no file is uploaded (e.g., the user cancels the upload), the function exits with return.
+
+2. Creating a FileReader Instance:
+
+```js
+const reader = new FileReader();
+```
+
+- FileReader: A built-in JavaScript object that allows you to read the contents of files (like images, text, etc.) asynchronously.
+- You need FileReader when you want to read local files in a browser without uploading them to a server.
+
+3. Reading the Image as a Base64 String:
+
+```js
+reader.readAsDataURL(file);
+```
+
+- readAsDataURL(file): Converts the file into a Base64-encoded string (a text representation of binary data).
+- Why Base64? This format can be directly embedded into image src attributes or sent via API requests without needing to store files separately.
+
+4. Handling the File After It's Read:
+
+```js
+reader.onload = async () => {
+  const base64Image = reader.result;
+  setSelectedImage(base64Image);
+  await updateProfile({ profilePic: base64Image });
+};
+```
+
+- reader.onload: Triggered when the file is fully read.
+- reader.result: Contains the Base64 version of the uploaded image.
+- setSelectedImage: Updates the UI to display the uploaded image immediately.
+- await updateProfile: Sends the image to the backend as part of the user's profile update.
+
+### 📸 Why Use FileReader?
+
+1. Preview Files Locally: Show the uploaded image to the user before sending it to the server.
+2. Process Different Formats: Handle images, videos, or plain text without uploading immediately.
+3. Improve User Experience: Users can see a preview and verify their upload.
+
+### 🔍 When Should You Use FileReader?
+
+1. Image Previews: Before uploading profile pictures, cover photos, etc.
+2. Reading Local Files: Display text from .txt files or images locally.
+3. Data Conversion: Convert files into Base64 or ArrayBuffer for processing.
