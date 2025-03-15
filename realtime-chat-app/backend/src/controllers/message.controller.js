@@ -22,10 +22,10 @@ export const getMessages = async (req, res) => {
     const myId = req.user._id;
 
     const messages = await Message.find({
-      senderId: myId,
-      receiverId: userToChatId,
-      senderId: userToChatId,
-      receiverId: myId,
+      $or: [
+        { senderId: myId, receiverId: userToChatId },
+        { senderId: userToChatId, receiverId: myId },
+      ],
     });
 
     res.status(200).json(messages);
@@ -41,26 +41,25 @@ export const sendMessage = async (req, res) => {
     const { id: receiverId } = req.params;
     const senderId = req.user._id;
 
-    let imgUrl;
+    let imageUrl;
     if (image) {
-      // upload bas64 image to cloudinary
+      // Upload base64 image to cloudinary
       const uploadResponse = await cloudinary.uploader.upload(image);
-      imgUrl = uploadResponse.secure_url;
+      imageUrl = uploadResponse.secure_url;
     }
 
     const newMessage = new Message({
       senderId,
       receiverId,
       text,
-      image: imgUrl,
+      image: imageUrl,
     });
 
     await newMessage.save();
-    return res.status(200).json({message: "got the message"})
 
-    // Todo: realtime functionality goes here
+    res.status(201).json(newMessage);
   } catch (error) {
-    console.log("Error in sendMessage: ", error.message);
+    console.log("Error in sendMessage controller: ", error.message);
     res.status(500).json({ error: "Internal server error" });
   }
 };
