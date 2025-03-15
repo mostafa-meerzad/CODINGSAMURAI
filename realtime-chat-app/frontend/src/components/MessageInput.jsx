@@ -33,12 +33,10 @@ const MessageInput = () => {
     if (!text.trim() && !imagePreview) return;
 
     try {
-      await sendMessage({
+       await sendMessage({
         text: text.trim(),
         image: imagePreview,
       });
-
-      console.log("clearing the form")
 
       // Clear form
       setText("");
@@ -104,8 +102,6 @@ const MessageInput = () => {
         >
           <Send size={22} />
         </button>
-
-        <button onClick={()=>setText("")}>test</button>
       </form>
     </div>
   );
