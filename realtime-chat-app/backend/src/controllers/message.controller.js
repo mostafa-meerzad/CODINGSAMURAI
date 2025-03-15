@@ -44,7 +44,7 @@ export const sendMessage = async (req, res) => {
     let imgUrl;
     if (image) {
       // upload bas64 image to cloudinary
-      const uploadResponse = await cloudinary.uploader.upload(img);
+      const uploadResponse = await cloudinary.uploader.upload(image);
       imgUrl = uploadResponse.secure_url;
     }
 
@@ -56,6 +56,7 @@ export const sendMessage = async (req, res) => {
     });
 
     await newMessage.save();
+    return res.status(200).json({message: "got the message"})
 
     // Todo: realtime functionality goes here
   } catch (error) {
