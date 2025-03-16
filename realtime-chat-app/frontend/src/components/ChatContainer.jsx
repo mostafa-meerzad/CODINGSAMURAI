@@ -13,8 +13,8 @@ const ChatContainer = () => {
     getMessages,
     isMessagesLoading,
     selectedUser,
-    // subscribeToMessages,
-    // unsubscribeFromMessages,
+    subscribeToMessages,
+    unsubscribeFromMessages
   } = useChatStore();
   const { authUser } = useAuthStore();
   const messageEndRef = useRef(null);
@@ -22,14 +22,14 @@ const ChatContainer = () => {
   useEffect(() => {
     getMessages(selectedUser._id);
 
-    // subscribeToMessages();
+    subscribeToMessages();
 
-    // return () => unsubscribeFromMessages();
+    return () => unsubscribeFromMessages();
   }, [
     selectedUser._id,
     getMessages,
-    // subscribeToMessages,
-    // unsubscribeFromMessages,
+    subscribeToMessages,
+    unsubscribeFromMessages,
   ]);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const ChatContainer = () => {
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => (
           <div
-           key={message._id}
+            key={message._id}
             className={`chat ${
               message.senderId === authUser._id ? "chat-end" : "chat-start"
             }`}
