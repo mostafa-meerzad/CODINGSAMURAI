@@ -232,3 +232,10 @@ In Socket.IO, this handshake process includes:
 2. Server processes the request and can accept or reject the connection.
 3. A WebSocket connection is established.
 
+## Scrolling an element
+
+to scroll to the end of content of an element you can use `useRef()` along with `scrollIntoView`
+
+```js
+messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+```
