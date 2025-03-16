@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 import { Users } from "lucide-react";
@@ -7,11 +7,16 @@ import { useAuthStore } from "../store/useAuthStore";
 const Sidebar = () => {
   const { getUsers, users, selectedUser, setSelectedUser, isUserLoading } =
     useChatStore();
-  const {onlineUsers} = useAuthStore()
+  const { onlineUsers } = useAuthStore();
+  const [showOnlineOnly, setShowOnlineOnly] = useState(false);
 
   useEffect(() => {
     getUsers();
   }, [getUsers]);
+
+  const filteredUsers = showOnlineOnly
+    ? users.filter((user) => onlineUsers.includes(user._id))
+    : users;
 
   if (isUserLoading) return <SidebarSkeleton />;
   return (
@@ -22,9 +27,23 @@ const Sidebar = () => {
           <span className="font-medium hidden lg:block">Contacts</span>
         </div>
         {/* todo: online filter toggle */}
+        <div className="mt-3 hidden lg:flex items-center gap-2">
+          <label className="cursor-pointer flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={showOnlineOnly}
+              onChange={(e) => setShowOnlineOnly(e.target.checked)}
+              className="checkbox checkbox-sm"
+            />
+            <span className="text-sm">show online only</span>
+          </label>
+          <span className="text-xs text-zinc-500">
+            {onlineUsers.length - 1} online
+          </span>
+        </div>
       </div>
       <div className="w-full py-3 overflow-y-auto">
-        {users.map((user) => (
+        {filteredUsers.map((user) => (
           <button
             onClick={() => setSelectedUser(user)}
             key={user._id}
@@ -56,6 +75,8 @@ const Sidebar = () => {
             </div>
           </button>
         ))}
+
+        {filteredUsers.length === 0 && (<div className="text-center text-zinc-500 py-4">No online users</div>)}
       </div>
     </aside>
   );
