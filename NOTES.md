@@ -219,3 +219,16 @@ reader.onload = async () => {
 1. Image Previews: Before uploading profile pictures, cover photos, etc.
 2. Reading Local Files: Display text from .txt files or images locally.
 3. Data Conversion: Convert files into Base64 or ArrayBuffer for processing.
+
+## Socket.io
+
+### What is socket.handshake?
+
+What is a "Handshake" in WebSockets?
+A handshake is the process where a client and server establish a WebSocket connection.
+In Socket.IO, this handshake process includes:
+
+1. Client sends an initial HTTP request (with headers, query parameters, and cookies if applicable).
+2. Server processes the request and can accept or reject the connection.
+3. A WebSocket connection is established.
+
