@@ -239,3 +239,10 @@ to scroll to the end of content of an element you can use `useRef()` along with 
 ```js
 messageEndRef.current.scrollIntoView({ behavior: "smooth" });
 ```
+
+## Preparing the App for Deploying
+
+1. initialize a npm package in the root directory where your `frontend` and `backend` directories are.
+2. add `.gitignore` file to ignore unnecessary files
+3. in the `package.json` in the root directory add `build` and `start` commands to install all the dependencies for both your backend and frontend
+4. configure connection links
