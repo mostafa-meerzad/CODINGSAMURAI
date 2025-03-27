@@ -5,3 +5,8 @@ export const userSchema = Joi.object({
   email: Joi.string().min(6).max(155).required().email(),
   password: Joi.string().min(6).max(50).required(),
 });
+
+export const loginSchema = Joi.object({
+  email: Joi.string().min(6).max(155).required().email(),
+  password: Joi.string().min(6).max(50).required(),
+});
