@@ -1,6 +1,6 @@
-import User from "../models/user-model";
-import { generateToken } from "../utils/generateToken";
-import { loginSchema, userSchema } from "../validators/user-validator";
+import User from "../models/user-model.js";
+import { generateToken } from "../utils/generateToken.js";
+import { loginSchema, userSchema } from "../validators/user-validator.js";
 import bcrypt from "bcryptjs";
 
 export const signup = async (req, res) => {
@@ -30,14 +30,14 @@ export const signup = async (req, res) => {
       generateToken(newUser._id, res);
       await newUser.save();
 
-      res
+      return res
         .status(201)
         .json({ id: newUser._id, name: newUser.name, email: newUser.email });
     } else {
       return res.status(400).json({ message: "invalid credentials" });
     }
   } catch (error) {
-    console.log("server error in sign-up controller");
+    console.log("server error in sign-up controller ", error);
     return res.status(500).json({ message: "server error" });
   }
 };
@@ -61,9 +61,9 @@ export const login = async (req, res) => {
     generateToken(user._id, res);
     res
       .status(200)
-      .json({ id: newUser._id, name: newUser.name, email: newUser.email });
+      .json({ id: user._id, name: user.name, email: user.email });
   } catch (error) {
-    console.log("server error in login controller");
+    console.log("server error in login controller", error);
     return res.status(500).json({ message: "server error" });
   }
 };
