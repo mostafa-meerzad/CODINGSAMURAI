@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/user-model";
+import User from "../models/user-model.js";
 
 export const auth = async (req, res, next) => {
   try {
@@ -17,7 +17,7 @@ export const auth = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log("error in auth middleware");
+    console.log("error in auth middleware ", error);
     return res.status(500).json({ message: "internal server error" });
   }
 };

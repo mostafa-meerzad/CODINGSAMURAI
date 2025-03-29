@@ -6,7 +6,7 @@ const todoSchema = new Schema(
     task: { type: String, required: true },
     isCompleted: { type: Boolean, default: false },
   },
-  { timestamps }
+  { timestamps: true }
 );
 
 export const Todo = model("Todo", todoSchema);
