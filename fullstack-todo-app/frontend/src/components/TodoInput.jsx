@@ -12,7 +12,7 @@ const TodoInput = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex items-center justify-between md:gap-5 px-5 py-4 rounded-md mt-12 bg-very-dark-desaturated-blue "
+      className="flex items-center justify-between md:gap-5 px-5 py-4 rounded-md mt-12 mb-8 bg-very-dark-grayish-blue "
     >
       <label className="relative flex items-center cursor-pointer">
         <input type="checkbox" {...register("isCompleted")} className="peer hidden" />
