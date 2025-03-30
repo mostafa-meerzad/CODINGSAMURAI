@@ -1,9 +1,32 @@
 @import "tailwindcss";
 
 @layer base {
-
 }
 body {
-  @apply bg-[url("/bg-mobile-light.jpg")] md:bg-[url("/bg-desktop-light.jpg")] bg-cover bg-no-repeat bg-top bg-[#25273c];
+  @apply bg-[url("/bg-mobile-light.jpg")] md:bg-[url("/bg-desktop-light.jpg")] bg-[#25273c] ;
 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+  height: 33vh;
+}
+
+@theme {
+  --color-very-light-gray: #fafafa;
+  --color-very-light-grayish-blue: #e4e5f1;
+  --color-light-grayish-blue: #d2d3db;
+  --color-dark-grayish-blue: #9394a5;
+  --color-very-dark-grayish-blue: #484b6a;
+
+  --color-very-bark-blue: rgb(22, 23, 34);
+  --color-very-dark-desaturated-blue: #25273c;
+  --color-light-grayish-blue: #cacde8;
+  --color-light-grayish-blue-hover: #e4e5f1;
+  --color-dark-grayish-blue: #777a92;
+  --color-very-dark-grayish-blue: #4d5066;
+  --color-very-dark-grayish-blue: #393a4c;
+
+  --color-bright-blue: hsl(220, 98%, 61%);
+  --color-check-background-from: #57ddff;
+  --color-check-background-to: #c058f3;
 }
