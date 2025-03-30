@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@layer base {
+
+}
+body {
+  @apply bg-[url("/bg-mobile-light.jpg")] md:bg-[url("/bg-desktop-light.jpg")] bg-cover bg-no-repeat bg-top bg-[#25273c];
+
+}
