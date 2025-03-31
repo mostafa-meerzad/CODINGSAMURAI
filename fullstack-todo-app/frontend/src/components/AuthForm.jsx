@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import cross from "../assets/icon-cross.svg";
+import toast from "react-hot-toast";
+import { axiosInstance } from "../axios";
 
 const Input = ({ label, error, ...props }) => (
   <div className="w-full">
@@ -22,19 +24,35 @@ const AuthForm = ({ closeForm }) => {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    reset()
+  const onSubmit = async (data) => {
+    try {
+      const url = isRegister
+        ? `/auth/signup`
+        : `/auth/login`;
+
+      const response = await axiosInstance.post(url, data);
+
+      if (response.status >= 200 && response.status < 300) {
+        toast.success(
+          isRegister ? "Registered successfully!" : "Logged in successfully!"
+        );
+      }
+      reset();
+      closeForm();
+    } catch (error) {
+      console.log(error.response.data.error);
+      toast.error("couldn't signup");
+    }
   };
 
   return (
     <div className="absolute w-lg  flex flex-col items-stretch justify-between gap-8 bg-very-dark-desaturated-blue rounded-md p-8">
       <div className="flex justify-center items-center relative">
         <h2 className="text-center capitalize text-xl">
-          {isRegister ?  "sign up" : "login"}
+          {isRegister ? "sign up" : "login"}
         </h2>
         <button onClick={closeForm} className="absolute right-0">
           <img src={cross} alt="close form" />
@@ -52,12 +70,24 @@ const AuthForm = ({ closeForm }) => {
         <Input
           label={"email"}
           error={errors.email?.message}
-          {...register("email", { required: "Email is required" })}
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+              message: "Invalid email address",
+            },
+          })}
         />
         <Input
           label={"password"}
           error={errors.password?.message}
-          {...register("password", { required: "password is required" })}
+          {...register("password", {
+            required: "password is required",
+            minLength: {
+              value: 6,
+              message: "password must be at least 6 characters",
+            },
+          })}
         />
 
         <button
