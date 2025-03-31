@@ -1,24 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Todo from "../Todo";
+import { axiosInstance } from "../../axios";
+
 
 const Todos = () => {
-  const todos = [
-    { isCompleted: false, task: "complete the todo project", id: "123456789" },
-    {
-      isCompleted: false,
-      task: "complete the todo project 1",
-      id: "1234567891",
-    },
-    {
-      isCompleted: true,
-      task: "complete the todo project 2",
-      id: "1234567892",
-    },
-  ];
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    const getTodos = async () => {
+      const response = await axiosInstance.get(`/todo`);
+
+      // setTodos((prev) => [...prev, response.data]);
+      console.log(response.data)
+      setTodos(response.data)
+    };
+
+    getTodos();
+  }, []);
   return (
     <section className="flex flex-col gap-1">
       {todos.map((todo) => {
-        return <Todo {...todo} key={todo.id} />;
+        return <Todo {...todo} key={todo._id} />;
       })}
     </section>
   );
