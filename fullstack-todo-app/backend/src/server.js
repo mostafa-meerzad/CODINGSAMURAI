@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth-route.js";
 import todoRoutes from "./routes/todo-route.js";
 import { connectDB } from "./utils/connectDB.js";
 import cors from "cors";
+import path from "path";
 
 config();
 
