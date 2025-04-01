@@ -36,11 +36,11 @@ export const TodoContextProvider = ({ children }) => {
     }
   };
 
-  const updateTodo = async ({ isCompleted, task, id }) => {
+  const updateTodo = async (isCompleted, task, id) => {
     if (!isAuthenticated) return;
 
     try {
-      const response = await axiosInstance.put(`/todo/:${id}`, {
+      const response = await axiosInstance.put(`/todo/${id}`, {
         isCompleted,
         task,
       });
@@ -49,10 +49,27 @@ export const TodoContextProvider = ({ children }) => {
         getAllTodos();
       }
 
-      return toast.error("can't update todo!");
+      return toast.success("todo updated");
     } catch (error) {
       console.log("something went wrong: ", error);
       toast.error("can't update todo!");
+    }
+  };
+
+  const removeTodo = async (id) => {
+    if (!isAuthenticated) return;
+
+    try {
+      const response = await axiosInstance.delete(`/todo/${id}`);
+
+      if (response.status >= 200 && response.status < 300) {
+        getAllTodos();
+      }
+
+      return toast.error("todo deleted!");
+    } catch (error) {
+      console.log("something went wrong: ", error);
+      toast.error("can't delete todo!");
     }
   };
 
@@ -64,7 +81,9 @@ export const TodoContextProvider = ({ children }) => {
   }, [isAuthenticated]);
 
   return (
-    <todoContext.Provider value={{ todos, updateTodo, getAllTodos, addTodo }}>
+    <todoContext.Provider
+      value={{ todos, updateTodo, getAllTodos, addTodo, removeTodo }}
+    >
       {children}
     </todoContext.Provider>
   );
