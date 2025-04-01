@@ -1,20 +1,26 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import check from "../assets/icon-check.svg";
 import { axiosInstance } from "../axios";
 import toast from "react-hot-toast";
+import { useAuth } from "../contexts/AuthContext";
 
 const TodoInput = () => {
   const { register, handleSubmit } = useForm();
+  const { isAuthenticated } = useAuth();
 
+  console.log(isAuthenticated);
   const onSubmit = async (data) => {
+    if (!isAuthenticated) {
+      toast.error("you need to login first!");
+      return;
+    }
     try {
       console.log("form data: ", data);
-      const response = await axiosInstance.post("/todo", data)
-      console.log("response from adding a todo: ", response)
+      const response = await axiosInstance.post("/todo", data);
+      console.log("response from adding a todo: ", response);
     } catch (error) {
-      console.log("something went wrong, ", error)
-      toast.error("can't add Todo!")
+      console.log("something went wrong, ", error);
+      toast.error("can't add Todo!");
     }
   };
   return (
@@ -22,8 +28,6 @@ const TodoInput = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex items-center justify-between md:gap-5 px-5 py-4 rounded-md mt-12 mb-8 bg-very-dark-grayish-blue "
     >
-      
-
       <label className="w-full">
         <input
           type="text"

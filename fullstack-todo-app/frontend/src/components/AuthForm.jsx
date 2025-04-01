@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import cross from "../assets/icon-cross.svg";
 import toast from "react-hot-toast";
-import { axiosInstance } from "../axios";
+import { useAuth } from "../contexts/AuthContext";
 
 const Input = ({ label, error, ...props }) => (
   <div className="w-full">
@@ -18,7 +18,8 @@ const Input = ({ label, error, ...props }) => (
 );
 
 const AuthForm = ({ closeForm }) => {
-  const [isRegister, setIsRegister] = useState(true);
+  const { isAuthenticated, signup, login } = useAuth();
+  const [isRegister, setIsRegister] = useState(isAuthenticated);
 
   const {
     register,
@@ -29,17 +30,7 @@ const AuthForm = ({ closeForm }) => {
 
   const onSubmit = async (data) => {
     try {
-      const url = isRegister
-        ? `/auth/signup`
-        : `/auth/login`;
-
-      const response = await axiosInstance.post(url, data);
-
-      if (response.status >= 200 && response.status < 300) {
-        toast.success(
-          isRegister ? "Registered successfully!" : "Logged in successfully!"
-        );
-      }
+      isRegister ? signup(data) : login(data);
       reset();
       closeForm();
     } catch (error) {
