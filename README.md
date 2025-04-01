@@ -9,15 +9,15 @@ This repository contains two major projects demonstrating my skills in frontend 
    - Built using **Node.js**, **Express**, and **Socket.IO**.
    - Allows users to join chat rooms and communicate in real-time.
 
-2. **E-Commerce Website (Bamboo Monitor Stands)**
+2. **Full Stack Todo Application**
    - A full-stack MERN (MongoDB, Express, React, Node.js) application.
-   - Includes features like user authentication, a shopping cart, and payment integration.
+   - Includes features like user authentication, CRUD operations
 
 ## 📁 Project Structure
 ```
 CODINGSAMURAI/
 ├── chat-app/              # Real-Time Chat Application
-└── bamboo-ecommerce/     # E-Commerce Website
+└── todo-app/     # Full stack Todo App
 ```
 
 ## 🚀 How to Run the Projects (Coming Soon)
