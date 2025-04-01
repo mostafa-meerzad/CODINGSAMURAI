@@ -1,26 +1,15 @@
-import React, { useEffect, useState } from "react";
 import Todo from "../Todo";
-import { axiosInstance } from "../../axios";
-
+import { useTodo } from "../../contexts/TodoContext";
 
 const Todos = () => {
-  const [todos, setTodos] = useState([]);
+  const { todos } = useTodo();
 
-  useEffect(() => {
-    const getTodos = async () => {
-      const response = await axiosInstance.get(`/todo`);
-
-      // setTodos((prev) => [...prev, response.data]);
-      console.log(response.data)
-      setTodos(response.data)
-    };
-
-    getTodos();
-  }, []);
   return (
     <section className="flex flex-col gap-1">
-      {todos.map((todo) => {
-        return <Todo {...todo} key={todo._id} />;
+      {todos?.map(({ _id, isCompleted, task }) => {
+        return (
+          <Todo id={_id} isCompleted={isCompleted} task={task} key={_id} />
+        );
       })}
     </section>
   );

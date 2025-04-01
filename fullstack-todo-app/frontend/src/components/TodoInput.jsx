@@ -1,27 +1,23 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { axiosInstance } from "../axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../contexts/AuthContext";
+import { useTodo } from "../contexts/TodoContext";
 
 const TodoInput = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const { isAuthenticated } = useAuth();
+  const { addTodo, getAllTodos } = useTodo();
 
-  console.log(isAuthenticated);
   const onSubmit = async (data) => {
     if (!isAuthenticated) {
       toast.error("you need to login first!");
       return;
     }
-    try {
-      console.log("form data: ", data);
-      const response = await axiosInstance.post("/todo", data);
-      console.log("response from adding a todo: ", response);
-    } catch (error) {
-      console.log("something went wrong, ", error);
-      toast.error("can't add Todo!");
-    }
+
+    addTodo(data.task);
+    reset();
+    getAllTodos();
   };
   return (
     <form
