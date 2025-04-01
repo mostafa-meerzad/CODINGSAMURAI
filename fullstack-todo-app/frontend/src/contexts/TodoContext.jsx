@@ -12,7 +12,7 @@ export const TodoContextProvider = ({ children }) => {
   const getAllTodos = async () => {
     if (!isAuthenticated) return;
     try {
-      const response = await axiosInstance.get("/api/todo");
+      const response = await axiosInstance.get("/todo");
       setTodos(response.data);
     } catch (error) {
       console.log("can't get all your todos: ", error);
@@ -24,7 +24,7 @@ export const TodoContextProvider = ({ children }) => {
     if (!isAuthenticated) return;
 
     try {
-      const response = await axiosInstance.post("/api/todo", { task });
+      const response = await axiosInstance.post("/todo", { task });
       if (response.status >= 200 && response.status < 300) {
         const todo = response.data;
         setTodos((prev) => [todo, ...prev]);
@@ -40,7 +40,7 @@ export const TodoContextProvider = ({ children }) => {
     if (!isAuthenticated) return;
 
     try {
-      const response = await axiosInstance.put(`/api/todo/${id}`, {
+      const response = await axiosInstance.put(`/todo/${id}`, {
         isCompleted,
         task,
       });
@@ -60,7 +60,7 @@ export const TodoContextProvider = ({ children }) => {
     if (!isAuthenticated) return;
 
     try {
-      const response = await axiosInstance.delete(`/api/todo/${id}`);
+      const response = await axiosInstance.delete(`/todo/${id}`);
 
       if (response.status >= 200 && response.status < 300) {
         getAllTodos();
