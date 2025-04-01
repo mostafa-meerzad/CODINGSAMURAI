@@ -16,11 +16,16 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/todo", todoRoutes);
 
-app.get("/", (req, res) => {
-  return res.send("Welcome to our Todo service");
-});
-
 const PORT = process.env.PORT || 3000;
+
+const __dirname = path.resolve();
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });
+}
 app.listen(PORT, () => {
   console.log("server listening on port: ", PORT);
   connectDB();
