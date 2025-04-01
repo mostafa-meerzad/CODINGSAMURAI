@@ -11,7 +11,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const signup = async (userData) => {
     try {
-      const response = await axiosInstance.post("/auth/signup", userData);
+      const response = await axiosInstance.post("/api/auth/signup", userData);
 
       if (response.status >= 200 && response.status < 300) {
         toast.success("Registered successfully!");
@@ -28,7 +28,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const login = async (userData) => {
     try {
-      const response = await axiosInstance.post("/auth/login", userData);
+      const response = await axiosInstance.post("/api/auth/login", userData);
 
       if (response.status >= 200 && response.status < 300) {
         toast.success("Logged in successfully!");
@@ -45,7 +45,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await axiosInstance.post("/auth/logout");
+      const response = await axiosInstance.post("/api/auth/logout");
       if (response.status >= 200 && response.status < 300) {
         toast.success("Logged out successfully!");
         setIsAuthenticated(false);
